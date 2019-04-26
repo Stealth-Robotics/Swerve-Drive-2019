@@ -10,6 +10,7 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
+import frc.robot.commands.drivebaseCommands.ResetDrivetrainGyroCommand;
 import frc.robot.util.constants.OIConstants;
 
 /**
@@ -60,6 +61,8 @@ public class OI
         slowButton = new JoystickButton(driveJoystick, OIConstants.SLOW_BUTTON);
         fastButton = new JoystickButton(driveJoystick, OIConstants.FAST_BUTTON);
         resetHeadingButton = new JoystickButton(driveJoystick, OIConstants.RESET_HEADING_BUTTON);
+
+        resetHeadingButton.whenPressed(new ResetDrivetrainGyroCommand(Robot.swerveDriveBase));
     }
 
 

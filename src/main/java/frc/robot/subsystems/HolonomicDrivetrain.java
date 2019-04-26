@@ -7,7 +7,7 @@
 
 package frc.robot.subsystems;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.commands.drivebaseCommands.HolonomicDriveCommand;
 
 /**
  * Add your docs here.
@@ -27,7 +27,7 @@ public abstract class HolonomicDrivetrain extends Drivetrain {
 
 	@Override
 	protected void initDefaultCommand() {
-		//setDefaultCommand(new HolonomicDriveCommand(this));
+		setDefaultCommand(new HolonomicDriveCommand(this));
 	}
 
 	public boolean isFieldOriented() {

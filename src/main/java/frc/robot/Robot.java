@@ -16,7 +16,7 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.subsystems.MechanumDriveBase;
+import frc.robot.subsystems.*;
 import frc.robot.util.*;
 import frc.robot.commands.drivebaseCommands.MechanumUserDrive;
 
@@ -33,7 +33,8 @@ import frc.robot.util.constants.Constants;
 public class Robot extends TimedRobot 
 {
     // SUBSYSTEMS
-    public static MechanumDriveBase mechanumDriveBase;
+    //public static MechanumDriveBase mechanumDriveBase;
+    public static SwerveDriveBase swerveDriveBase;
 
     public static PowerDistributionPanel pdp;
     public static OI oi;
@@ -52,7 +53,8 @@ public class Robot extends TimedRobot
     public void robotInit() 
     {
         //SUBSYSTEMS
-        mechanumDriveBase = new MechanumDriveBase();
+        //mechanumDriveBase = new MechanumDriveBase();
+        swerveDriveBase = new SwerveDriveBase();
 
         pdp = new PowerDistributionPanel();
         oi = new OI();

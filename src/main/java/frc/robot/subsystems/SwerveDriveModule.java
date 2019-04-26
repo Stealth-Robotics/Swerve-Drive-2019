@@ -15,18 +15,19 @@ import com.revrobotics.CANSparkMax.IdleMode;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
 import edu.wpi.first.wpilibj.command.Subsystem;
+import frc.robot.util.Exceptions.MotorStallException;
 
 /**
  * Add your docs here.
  */
 public class SwerveDriveModule extends Subsystem {
-  // Put methods for controlling this subsystem
-  // here. Call these from Commands.
-  private static final long STALL_TIMEOUT = 2000;
+  
+  //used to check if motor is stalling
+  // private static final long STALL_TIMEOUT = 2000;
+  // private long stallTimeBegin = Long.MAX_VALUE;
+  // private double lastError = 0;
 
-  private long stallTimeBegin = Long.MAX_VALUE;
-
-  private double lastError = 0, lastTargetAngle = 0, previousTargetAngle = 0;
+  private double lastTargetAngle = 0;
 
   private final int moduleNumber;
 
@@ -70,6 +71,10 @@ public class SwerveDriveModule extends Subsystem {
 		driveMotor.setCurrentLimit(50);
 		driveMotor.EnableCurrentLimit(true);
     */
+
+    angleMotor.setSmartCurrentLimit(50);
+    
+    driveMotor.setSmartCurrentLimit(50);
   }
 
   @Override
@@ -91,34 +96,47 @@ public class SwerveDriveModule extends Subsystem {
   }
 
   public void robotDisabledInit() {
-    stallTimeBegin = Long.MAX_VALUE;
+    //stallTimeBegin = Long.MAX_VALUE;
   }
 
   public void setTargetAngle(double targetAngle) {
     lastTargetAngle = targetAngle;
-
+    
+    //convert the target angle into value between 0 and 360 then add zero offset of module
     targetAngle %= 360;
     targetAngle += zeroOffset;
 
+    //calculate the current angle of the motor from the encoder
     double currentAngle = angleMotorEncoder.getPosition() * (360.0 / 1024.0);
     double currentAngleMod = currentAngle % 360;
     if (currentAngleMod < 0) currentAngleMod += 360;
 
+    // Calculate delta AKA amount change required
     double delta = currentAngleMod - targetAngle;
 
     if (delta > 180) {
+
       targetAngle += 360;
+
     } else if (delta < -180) {
+
       targetAngle -= 360;
+
     }
 
     delta = currentAngleMod - targetAngle;
     if (delta > 90 || delta < -90) {
+
       if (delta > 90) {
+
         targetAngle += 180;
+
       } else if (delta < -90){
+
         targetAngle -= 180;
+
       }
+
       driveMotor.setInverted(false);
     } else {
       driveMotor.setInverted(true);
@@ -126,16 +144,17 @@ public class SwerveDriveModule extends Subsystem {
 
     targetAngle += currentAngle - currentAngleMod;
 
+    //check if motor is staled and throw exception if it is
     /*double currentError = angleMotorEncoder.getPosition() - previousTargetAngle;
     if (Math.abs(currentError - lastError) < 7.5 &&
 				Math.abs(currentAngle - targetAngle) > 5) {
 			if (stallTimeBegin == Long.MAX_VALUE) stallTimeBegin = System.currentTimeMillis();
 			if (System.currentTimeMillis() - stallTimeBegin > STALL_TIMEOUT) {
 				throw new MotorStallException(String.format("Angle motor on swerve module '%d' has stalled.",
-						mModuleNumber));
+						moduleNumber));
 			}
 		} else {
-			mStallTimeBegin = Long.MAX_VALUE;
+			stallTimeBegin = Long.MAX_VALUE;
 		}
     lastError = currentError;*/
 

@@ -28,10 +28,11 @@ public class SwerveDriveBase extends HolonomicDrivetrain {
 	 * 3 is Back Right
 	 */
   private SwerveDriveModule[] swerveModules = new SwerveDriveModule[] {
-    new SwerveDriveModule(0, new CANSparkMax(deviceID, MotorType.kBrushless), new CANSparkMax(deviceID, MotorType.kBrushless), 75.5),
-    new SwerveDriveModule(1, new CANSparkMax(deviceID, MotorType.kBrushless), new CANSparkMax(deviceID, MotorType.kBrushless), 13.7),
-    new SwerveDriveModule(2, new CANSparkMax(deviceID, MotorType.kBrushless), new CANSparkMax(deviceID, MotorType.kBrushless), 254),
-    new SwerveDriveModule(3, new CANSparkMax(deviceID, MotorType.kBrushless), new CANSparkMax(deviceID, MotorType.kBrushless), 157),
+    //                Module ID            Angle Motor                               Drive Motor                 Zero Offset
+    new SwerveDriveModule(0, new CANSparkMax(1, MotorType.kBrushless), new CANSparkMax(2, MotorType.kBrushless), 45.0),
+    new SwerveDriveModule(1, new CANSparkMax(3, MotorType.kBrushless), new CANSparkMax(4, MotorType.kBrushless), 45.0 + 90.0),
+    new SwerveDriveModule(2, new CANSparkMax(5, MotorType.kBrushless), new CANSparkMax(6, MotorType.kBrushless), 45.0 + 90.0 + 90.0),
+    new SwerveDriveModule(3, new CANSparkMax(7, MotorType.kBrushless), new CANSparkMax(8, MotorType.kBrushless), 45.0 + 90.0 + 90.0 + 90.0),
   };
 
   private static PigeonIMU imu; // !< The IMU

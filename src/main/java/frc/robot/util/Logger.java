@@ -66,7 +66,7 @@ public class Logger implements Runnable
     public void run()
     {
         //get common things so that we dont call them a million times
-        imu = Robot.mechanumDriveBase.getPigeonIMU();
+        imu = Robot.swerveDriveBase.GetIMU();//mechanumDriveBase.getPigeonIMU();
         driverStation = DriverStation.getInstance();
 
         //log the things!
@@ -159,7 +159,7 @@ public class Logger implements Runnable
             //Grabber Default Command, Grabber Log
             //Lifter Default Command, Lifter Log
             
-            MechanumDriveBase driveBase = Robot.mechanumDriveBase;
+            SwerveDriveBase driveBase = Robot.swerveDriveBase;
 
 			logSystems.write(
 					StartTime + "," +
