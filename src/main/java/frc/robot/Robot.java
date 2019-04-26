@@ -9,7 +9,7 @@ package frc.robot;
 
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
-// import edu.wpi.first.wpilibj.PowerDistributionPanel;
+import edu.wpi.first.wpilibj.PowerDistributionPanel;
 import edu.wpi.first.wpilibj.TimedRobot;
 import edu.wpi.first.wpilibj.command.Command;
 import edu.wpi.first.wpilibj.command.Scheduler;
@@ -32,8 +32,10 @@ import frc.robot.util.constants.Constants;
  */
 public class Robot extends TimedRobot 
 {
-    // public static Vision vision;
+    // SUBSYSTEMS
     public static MechanumDriveBase mechanumDriveBase;
+
+    public static PowerDistributionPanel pdp;
     public static OI oi;
 
     private Logger logging;
@@ -49,8 +51,10 @@ public class Robot extends TimedRobot
     @Override
     public void robotInit() 
     {
-        // vision = new Vision();
+        //SUBSYSTEMS
         mechanumDriveBase = new MechanumDriveBase();
+
+        pdp = new PowerDistributionPanel();
         oi = new OI();
 
         //start logging thread
@@ -59,12 +63,12 @@ public class Robot extends TimedRobot
 
         loggingThread.start();
         
-        //init USB CAMERA
+        //init USB CAMERA 1
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
         camera.setResolution(160, 120);
         camera.setFPS(15);
 
-        //init USB CAMERA
+        //init USB CAMERA 2
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(1);
         camera1.setResolution(160, 120);
         camera1.setFPS(10);
