@@ -8,35 +8,35 @@ import frc.robot.Robot;
 /**
  * Allows the user to drive the robot using a joystick
  */
-public class UserDrive extends Command 
+public class MechanumUserDrive extends Command 
 {
-    public UserDrive() 
+    public MechanumUserDrive() 
     {
         super("UserDrive");
         // Use requires() here to declare subsystem dependencies
-        requires(Robot.driveBase);
+        requires(Robot.mechanumDriveBase);
     }
   
     // Called just before this Command runs the first time
     @Override
     protected void initialize() 
     {
-        Robot.driveBase.resetHeadingAccumError();
+        Robot.mechanumDriveBase.resetHeadingAccumError();
     }
   
     // Called repeatedly when this Command is scheduled to run
     @Override
     protected void execute() 
     {
-        if(Robot.driveBase.EnableUserDrive)
+        if(Robot.mechanumDriveBase.EnableUserDrive)
         {
-            Robot.driveBase.move(Robot.oi.driveJoystick, false, false); //withPID, then withHeadless
+            Robot.mechanumDriveBase.move(Robot.oi.driveJoystick, false, false); //withPID, then withHeadless
         }
         
         double pov;
         if ((pov = Robot.oi.driveJoystick.getPOV()) != -1)
         {
-            Robot.driveBase.setTargetHeading(pov * Math.PI / 180);
+            Robot.mechanumDriveBase.setTargetHeading(pov * Math.PI / 180);
         }
     }
   
@@ -52,7 +52,7 @@ public class UserDrive extends Command
     protected void end()
     {
         //set motor power to 0
-        Robot.driveBase.moveWithoutIMU(0, 0, 0);
+        Robot.mechanumDriveBase.moveWithoutIMU(0, 0, 0);
     }
   
     // Called when another command which requires one or more of the same

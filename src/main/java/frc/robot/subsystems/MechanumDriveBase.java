@@ -26,7 +26,7 @@ import frc.robot.util.constants.Constants;
  * 
  * <p> Each wheel is powered by one motor, connected to a TalonSRX </p>
  */
-public class DriveBase extends Subsystem
+public class MechanumDriveBase extends Subsystem
 {
 
     private static WPI_TalonSRX driveLF; // !< Left front wheel
@@ -47,7 +47,7 @@ public class DriveBase extends Subsystem
 
     public boolean EnableUserDrive = true;
 
-    public DriveBase()
+    public MechanumDriveBase()
     {
         super();
 
@@ -105,7 +105,7 @@ public class DriveBase extends Subsystem
     @Override
     public void initDefaultCommand()
     {
-        setDefaultCommand(new UserDrive());
+        setDefaultCommand(new MechanumUserDrive());
     }
     
     /**

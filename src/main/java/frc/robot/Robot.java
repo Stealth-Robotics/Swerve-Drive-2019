@@ -16,9 +16,9 @@ import edu.wpi.first.wpilibj.command.Scheduler;
 import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
-import frc.robot.subsystems.DriveBase;
+import frc.robot.subsystems.MechanumDriveBase;
 import frc.robot.util.*;
-import frc.robot.commands.drivebaseCommands.UserDrive;
+import frc.robot.commands.drivebaseCommands.MechanumUserDrive;
 
 import frc.robot.util.constants.OIConstants;
 import frc.robot.util.constants.Constants;
@@ -33,7 +33,7 @@ import frc.robot.util.constants.Constants;
 public class Robot extends TimedRobot 
 {
     // public static Vision vision;
-    public static DriveBase driveBase;
+    public static MechanumDriveBase mechanumDriveBase;
     public static OI oi;
 
     private Logger logging;
@@ -50,7 +50,7 @@ public class Robot extends TimedRobot
     public void robotInit() 
     {
         // vision = new Vision();
-        driveBase = new DriveBase();
+        mechanumDriveBase = new MechanumDriveBase();
         oi = new OI();
 
         //start logging thread
@@ -70,7 +70,7 @@ public class Robot extends TimedRobot
         camera1.setFPS(10);
 
         //AUTO CHOOSER
-        m_chooser.setDefaultOption("Default Auto", new UserDrive());
+        m_chooser.setDefaultOption("Default Auto", new MechanumUserDrive());
         SmartDashboard.putData("Auto mode", m_chooser);
     }
   
@@ -205,7 +205,7 @@ public class Robot extends TimedRobot
         SmartDashboard.putNumber("OI/Twist", oi.driveJoystick.getRawAxis(OIConstants.DRIVE_JOYSTICK_TWIST));
         SmartDashboard.putNumber("OI/Magnitude", oi.driveJoystick.getMagnitude());
         SmartDashboard.putNumber("OI/Direction", oi.driveJoystick.getDirectionDegrees());
-        SmartDashboard.putNumber("Telemetry/Heading", driveBase.getHeading());
-        SmartDashboard.putNumber("Telemetry/TargetHeading", driveBase.getTargetHeading());
+        SmartDashboard.putNumber("Telemetry/Heading", mechanumDriveBase.getHeading());
+        SmartDashboard.putNumber("Telemetry/TargetHeading", mechanumDriveBase.getTargetHeading());
     }
 }
