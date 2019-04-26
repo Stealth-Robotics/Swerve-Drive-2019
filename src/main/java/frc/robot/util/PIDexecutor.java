@@ -4,7 +4,8 @@ package frc.robot.util;
 import java.util.function.DoubleSupplier;
 
 /**
- * Runs a PID loop
+ * Custom Code to run a PID loop.
+ * Using the Spark Max / WPI Talon Built in PID is recomended.
  */
 public class PIDexecutor
 {
