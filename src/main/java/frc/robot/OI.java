@@ -10,7 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.visionCommands.*;
 import frc.robot.util.constants.OIConstants;
 
 /**
@@ -53,8 +52,6 @@ public class OI
     public Button fastButton;
     public Button resetHeadingButton;
 
-    public Button alignWithTargetButton;
-
   
     OI()
     {
@@ -63,11 +60,6 @@ public class OI
         slowButton = new JoystickButton(driveJoystick, OIConstants.SLOW_BUTTON);
         fastButton = new JoystickButton(driveJoystick, OIConstants.FAST_BUTTON);
         resetHeadingButton = new JoystickButton(driveJoystick, OIConstants.RESET_HEADING_BUTTON);
-
-        alignWithTargetButton = new JoystickButton(driveJoystick, OIConstants.ALIGN_WITH_TARGET_BUTTON);
-
-        //alignWithTargetButton.whenPressed(new GoToTarget(0));
-        alignWithTargetButton.whileHeld(new AlignWithTarget());
     }
 
 
