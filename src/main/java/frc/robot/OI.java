@@ -10,9 +10,6 @@ package frc.robot;
 import edu.wpi.first.wpilibj.Joystick;
 import edu.wpi.first.wpilibj.buttons.Button;
 import edu.wpi.first.wpilibj.buttons.JoystickButton;
-import frc.robot.commands.elevatorCommands.*;
-import frc.robot.commands.grabberCommands.*;
-import frc.robot.commands.lifterCommands.*;
 import frc.robot.commands.visionCommands.*;
 import frc.robot.util.constants.OIConstants;
 
@@ -58,40 +55,6 @@ public class OI
 
     public Button alignWithTargetButton;
 
-    public Joystick mechJoystick;
-
-    public Button elevatorLevel1Button;
-    public Button elevatorLevel2Button;
-    public Button elevatorLevel3Button;
-
-    public Button elevatorLevelBallModifier;
-
-    // public Button wristPos1Button;
-    // public Button wristPos2Button;
-    // public Button wristPos3Button;
-
-    public Button grabHatchButton;
-    public Button toggleHatchExtendButton;
-
-    // public Button runIntakeButton;
-    // public Button reverseIntakeButton;
-
-    public Joystick stationJoystick;
-
-    public Button level2Button;
-    public Button level3Button;
-    public Button nextStageButton;
-    public Button cancelClimbButton;
-
-    public Button wheelForwardButton;
-    public Button wheelBackwardButton;
-
-    public Button backLegUp;
-    public Button backLegDown;
-
-    public Button overrideElevatorLimitSwitch;
-    public Button overrideElevatorPID;
-
   
     OI()
     {
@@ -105,64 +68,6 @@ public class OI
 
         //alignWithTargetButton.whenPressed(new GoToTarget(0));
         alignWithTargetButton.whileHeld(new AlignWithTarget());
-
-        mechJoystick = new Joystick(1);
-
-        // wristPos1Button = new JoystickButton(mechJoystick, OIConstants.WRIST_POS_1_BUTTON);
-        // wristPos2Button = new JoystickButton(mechJoystick, OIConstants.WRIST_POS_2_BUTTON);
-        // wristPos3Button = new JoystickButton(mechJoystick, OIConstants.WRIST_POS_3_BUTTON);
-
-        // wristPos1Button.whenPressed(new SetTiltPos(Constants.TILT_VERTICAL));
-        // wristPos2Button.whenPressed(new SetTiltPos(Constants.TILT_HORIZONTAL));
-        // wristPos3Button.whenPressed(new SetTiltPos(Constants.TILT_DOWN));
-
-        grabHatchButton = new JoystickButton(mechJoystick, OIConstants.GRAB_HATCH_BUTTON);
-        toggleHatchExtendButton = new JoystickButton(mechJoystick, OIConstants.TOGGLE_HATCH_ENTEND_BUTTON);
-
-        grabHatchButton.whenPressed(new GrabHatch(false));
-        grabHatchButton.whenReleased(new GrabHatch(true));
-
-        toggleHatchExtendButton.whenPressed(new TogglePrimary());
-
-        // runIntakeButton = new JoystickButton(mechJoystick, OIConstants.RUN_INTAKE_TRIGGER);
-        // reverseIntakeButton = new JoystickButton(mechJoystick, OIConstants.REVERSE_INTAKE_TRIGGER);
-
-        elevatorLevelBallModifier = new JoystickButton(mechJoystick, OIConstants.ELEVATOR_BALL_LEVEL_MODIFYER);
-
-        elevatorLevel1Button = new JoystickButton(mechJoystick, OIConstants.ELEVATOR_LEVEL1_BUTTON);
-        elevatorLevel1Button.whenPressed(new ElevatorToLevel(1));
-
-        elevatorLevel2Button = new JoystickButton(mechJoystick, OIConstants.ELEVATOR_LEVEL2_BUTTON);
-        elevatorLevel2Button.whenPressed(new ElevatorToLevel(2));
-
-        elevatorLevel3Button = new JoystickButton(mechJoystick, OIConstants.ELEVATOR_LEVEL3_BUTTON);
-        elevatorLevel3Button.whenPressed(new ElevatorToLevel(3));
-
-        stationJoystick = new Joystick(2);
-
-        level2Button = new JoystickButton(stationJoystick, OIConstants.LEVEL_2_BUTTON);
-        level3Button = new JoystickButton(stationJoystick, OIConstants.LEVEL_3_BUTTON);
-        nextStageButton = new JoystickButton(stationJoystick, OIConstants.NEXT_STAGE_BUTTON);
-        cancelClimbButton = new JoystickButton(stationJoystick, OIConstants.CANCEL_CLIMB_BUTTON);
-
-        wheelForwardButton = new JoystickButton(stationJoystick, OIConstants.WHEEL_FORWARD_BUTTON);
-        wheelBackwardButton = new JoystickButton(stationJoystick, OIConstants.WHEEL_BACKWARD_BUTTON);
-
-        backLegUp = new JoystickButton(stationJoystick, OIConstants.BACK_LEG_UP_BUTTON);
-        backLegDown = new JoystickButton(stationJoystick, OIConstants.BACK_LEG_DOWN_BUTTON);
-
-        level2Button.whenPressed(new DriveOntoHab(2));
-        level3Button.whenPressed(new DriveOntoHab(3));
-
-        // overrideJoystick = new Joystick(2);
-
-        // overrideLiftPIDButton = new JoystickButton(overrideJoystick, OIConstants.OVERRIDE_LIFT_PID_BUTTON);
-        // overrideLiftPIDButton.whenPressed(new OverrideLiftPID());
-
-        overrideElevatorLimitSwitch = new JoystickButton(stationJoystick, OIConstants.OVERRIDE_ELEVATOR_LIMIT_BUTTON);
-        overrideElevatorPID = new JoystickButton(stationJoystick, OIConstants.OVERRIDE_ELEVATOR_PID);
-
-        overrideElevatorPID.whenPressed(new OverrideElevatorPID());
     }
 
 

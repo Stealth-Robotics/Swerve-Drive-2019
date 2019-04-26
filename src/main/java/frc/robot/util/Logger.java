@@ -160,25 +160,22 @@ public class Logger implements Runnable
             //Lifter Default Command, Lifter Log
             
             DriveBase driveBase = Robot.driveBase;
-            Elevator elevator = Robot.elevator;
-            Grabber grabber = Robot.grabber;
-            Lifter lifter = Robot.lifter;
 
 			logSystems.write(
 					StartTime + "," +
 					date.getTime() + "," +
 					
                     driveBase.getDefaultCommandName() + "," +
-                    driveBase.toString() + "," +
+                    driveBase.toString() // + "," +
 					
-                    elevator.getDefaultCommandName() + "," +
-                    elevator.toString() + "," +
+                    // elevator.getDefaultCommandName() + "," +
+                    // elevator.toString() + "," +
 				
-                    grabber.getDefaultCommandName() + "," +
-                    grabber.toString() + "," +
+                    // grabber.getDefaultCommandName() + "," +
+                    // grabber.toString() + "," +
 					
-                    lifter.getDefaultCommandName() + "," +
-                    lifter.toString()
+                    // lifter.getDefaultCommandName() + "," +
+                    // lifter.toString()
 					
 					+ "\n"
 					);

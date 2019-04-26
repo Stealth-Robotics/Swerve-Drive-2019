@@ -17,13 +17,9 @@ import edu.wpi.first.wpilibj.smartdashboard.SendableChooser;
 import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.DriveBase;
-import frc.robot.subsystems.Elevator;
-import frc.robot.subsystems.Grabber;
-import frc.robot.subsystems.Lifter;
 // import frc.robot.subsystems.Vision;
 import frc.robot.util.*;
 import frc.robot.commands.drivebaseCommands.UserDrive;
-import frc.robot.commands.grabberCommands.*;
 
 import frc.robot.util.constants.OIConstants;
 import frc.robot.util.constants.Constants;
@@ -39,9 +35,6 @@ public class Robot extends TimedRobot
 {
     // public static Vision vision;
     public static DriveBase driveBase;
-    public static Elevator elevator;
-    public static Grabber grabber;
-    public static Lifter lifter;
     public static OI oi;
 
     private Logger logging;
@@ -59,9 +52,6 @@ public class Robot extends TimedRobot
     {
         // vision = new Vision();
         driveBase = new DriveBase();
-        elevator = new Elevator();
-        grabber = new Grabber();
-        lifter = new Lifter();
         oi = new OI();
 
         //start logging thread
@@ -81,9 +71,7 @@ public class Robot extends TimedRobot
         camera1.setFPS(10);
 
         //AUTO CHOOSER
-        //m_chooser.setDefaultOption("Default Auto", new UserDrive());
-        m_chooser.setDefaultOption("Start Cargo", new StartCargo());
-        m_chooser.addOption("Start Hatch", new StartHatch());
+        m_chooser.setDefaultOption("Default Auto", new UserDrive());
         SmartDashboard.putData("Auto mode", m_chooser);
     }
   
@@ -104,11 +92,6 @@ public class Robot extends TimedRobot
         // SmartDashboard.putNumber("Lifter/CurrentB", pdp.getCurrent(?));
 
         putOiInfo();
-
-        SmartDashboard.putNumber("Lifter/EncoderL", lifter.getFrontLPosition());
-        SmartDashboard.putNumber("Lifter/EncoderR", lifter.getFrontRPosition());
-        SmartDashboard.putNumber("Lifter/EncoderB", lifter.getBackPosition());
-        //SmartDashboard.putNumber("Grabber/EncoderTilt", grabber.getTiltPosition());
     }
   
     /**
@@ -128,7 +111,6 @@ public class Robot extends TimedRobot
     @Override
     public void disabledPeriodic()
     {
-        SmartDashboard.putBoolean("Elevator/LimitSwitch", elevator.isLimitClosed());
         Scheduler.getInstance().run();
     }
   
@@ -160,13 +142,6 @@ public class Robot extends TimedRobot
         {
             m_autonomousCommand.start();
         }
-
-        grabber.init();
-
-        lifter.resetEncoders();
-        lifter.setTargets(Constants.FRONT_LEGS_LEVEL_0, Constants.FRONT_LEGS_LEVEL_0, Constants.BACK_LEG_LEVEL_0);
-
-        elevator.reset();
     }
   
     /**
@@ -176,7 +151,6 @@ public class Robot extends TimedRobot
     public void autonomousPeriodic()
     {
         Scheduler.getInstance().run();
-        lifter.runLoops();
     }
 
     /*@Override
@@ -195,16 +169,6 @@ public class Robot extends TimedRobot
         {
             m_autonomousCommand.cancel();
         }
-        lifter.resetEncoders();
-        lifter.setTargets(Constants.FRONT_LEGS_LEVEL_0, Constants.FRONT_LEGS_LEVEL_0, Constants.BACK_LEG_LEVEL_0);
-
-        grabber.init();
-        //grabber.setTiltPosition(0);
-
-        elevator.reset();
-        elevator.setTarget(0);
-
-        //grabber.togglePrimaryState();
     }
   
     /**
@@ -222,7 +186,6 @@ public class Robot extends TimedRobot
     @Override
     public void testInit() 
     {
-        lifter.resetEncoders();
     }
   
     /**
@@ -230,31 +193,7 @@ public class Robot extends TimedRobot
      */
     @Override
     public void testPeriodic() 
-    {
-        // SmartDashboard.putNumber("Lifter/EncoderL", lifter.getFrontLPosition());
-        // SmartDashboard.putNumber("Lifter/EncoderR", lifter.getFrontRPosition());
-        // SmartDashboard.putNumber("Lifter/EncoderB", lifter.getBackPosition());
-        // SmartDashboard.putNumber("Grabber/EncoderTilt", grabber.getTiltPosition());
-
-        // int frontTarget = (int)SmartDashboard.getNumber("Lifter/FrontTarget", 0);
-        // int backTarget = (int)SmartDashboard.getNumber("Lifter/BackTarget", 0);
-
-        // lifter.setTargets(frontTarget, frontTarget, backTarget);
-
-        // lifter.runLoops();
-
-        
-        // if (Robot.oi.mechJoystick.getPOV() != -1)
-        // {
-        //     Robot.lifter.setWheelSpeed((Robot.oi.mechJoystick.getPOV() == 0) ? 1 : -1);
-        // }
-        // else
-        // {
-        //     Robot.lifter.setWheelSpeed(0);
-        // }
-
-        // Lifter.legBack.set(oi.driveJoystick.getRawAxis(1));
-        
+    {   
     }
 
     /**
@@ -267,7 +206,6 @@ public class Robot extends TimedRobot
         SmartDashboard.putNumber("OI/Twist", oi.driveJoystick.getRawAxis(OIConstants.DRIVE_JOYSTICK_TWIST));
         SmartDashboard.putNumber("OI/Magnitude", oi.driveJoystick.getMagnitude());
         SmartDashboard.putNumber("OI/Direction", oi.driveJoystick.getDirectionDegrees());
-        SmartDashboard.putNumber("OI/POVinfo", oi.mechJoystick.getPOV());
         SmartDashboard.putNumber("Telemetry/Heading", driveBase.getHeading());
         SmartDashboard.putNumber("Telemetry/TargetHeading", driveBase.getTargetHeading());
     }
