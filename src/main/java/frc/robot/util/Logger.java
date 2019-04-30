@@ -19,7 +19,7 @@ import frc.robot.subsystems.*;
 /**
  * Logs telemetry  to file
  */
-public class Logger implements Runnable
+public class Logger
 {
 
     private FileWriter logMatch;
@@ -66,7 +66,7 @@ public class Logger implements Runnable
     public void run()
     {
         //get common things so that we dont call them a million times
-        imu = Robot.swerveDriveBase.GetIMU();//mechanumDriveBase.getPigeonIMU();
+        imu = Robot.swerveDriveBase.GetIMU();
         driverStation = DriverStation.getInstance();
 
         //log the things!

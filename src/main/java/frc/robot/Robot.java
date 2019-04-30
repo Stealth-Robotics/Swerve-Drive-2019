@@ -39,7 +39,6 @@ public class Robot extends TimedRobot
     public static PowerDistributionPanel pdp;
     public static OI oi;
 
-    private Logger logging;
     private Thread loggingThread;
   
     Command m_autonomousCommand;
@@ -60,8 +59,12 @@ public class Robot extends TimedRobot
         oi = new OI();
 
         //start logging thread
-        logging = new Logger();
-        loggingThread = new Thread(logging, "LoggingThread");
+        loggingThread = new Thread(() -> {
+            Logger logging = new Logger();
+            while (!Thread.interrupted()) {
+                logging.run();
+            }
+        });
 
         loggingThread.start();
         
