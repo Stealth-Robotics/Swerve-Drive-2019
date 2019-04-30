@@ -38,6 +38,7 @@ public class SwerveDriveModule extends Subsystem {
   private final CANEncoder angleMotorEncoder;
 
   private final CANSparkMax driveMotor;
+  private final CANEncoder driveMotorEncoder;
 
   public SwerveDriveModule(int ModuleNumber, CANSparkMax AngleMotor, CANSparkMax DriveMotor, double ZeroOffset) {
     moduleNumber = ModuleNumber;
@@ -49,6 +50,7 @@ public class SwerveDriveModule extends Subsystem {
     angleMotorEncoder = angleMotor.getEncoder();
 
     driveMotor = DriveMotor;
+    driveMotorEncoder = driveMotor.getEncoder();
 
     driveMotor.setMotorType(MotorType.kBrushless);
     angleMotor.setMotorType(MotorType.kBrushless);
@@ -83,6 +85,10 @@ public class SwerveDriveModule extends Subsystem {
     // setDefaultCommand(new MySpecialCommand());
   }
 
+  public int getModuleNumber() {
+    return moduleNumber;
+  }
+
   public CANSparkMax getAngleMotor() {
     return angleMotor;
   }
@@ -93,6 +99,14 @@ public class SwerveDriveModule extends Subsystem {
 
   public double getTargetAngle() {
     return lastTargetAngle;
+  }
+
+  public double getAngleMotorPosition() {
+    return angleMotorEncoder.getPosition();
+  }
+
+  public double getDriveMotorPosition() {
+    return driveMotorEncoder.getPosition();
   }
 
   public void robotDisabledInit() {

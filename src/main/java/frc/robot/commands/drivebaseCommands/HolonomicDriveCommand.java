@@ -41,6 +41,9 @@ public class HolonomicDriveCommand extends Command {
     SmartDashboard.putNumber("DriveBase/Input/Strafe", strafe);
     SmartDashboard.putNumber("DriveBase/Input/Rotation", rotation);
 
+    SmartDashboard.putNumber("DriveBase/Telemetry/GyroAngle", drivetrain.getGyroAngle());
+    SmartDashboard.putNumber("DriveBase/Telemetry/GyroAdjustmentAngle", drivetrain.getAdjustmentAngle());
+
     drivetrain.holonomicDrive(forward, strafe, rotation);
   }
 

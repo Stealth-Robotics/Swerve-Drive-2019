@@ -11,7 +11,7 @@ import com.ctre.phoenix.sensors.PigeonIMU;
 import com.revrobotics.CANSparkMax;
 import com.revrobotics.CANSparkMaxLowLevel.MotorType;
 
-import edu.wpi.first.wpilibj.command.Subsystem;
+import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 /**
  * Add your docs here.
@@ -118,8 +118,10 @@ public class SwerveDriveBase extends HolonomicDrivetrain {
 				swerveModules[i].setTargetAngle(swerveModules[i].getTargetAngle());
 			}
 			swerveModules[i].setTargetSpeed(speeds[i]);
-		}
+    }
 
+
+    SmartDashboard.putString("DriveBase/Telemetry/SwerveBaseTelemetry", toString());
   }
 
   @Override
@@ -127,5 +129,22 @@ public class SwerveDriveBase extends HolonomicDrivetrain {
 		for (SwerveDriveModule module : swerveModules) {
 			module.setTargetSpeed(0);
 		}
-	}
+  }
+  
+   /**
+   * Returns telemetry data about the subsystem
+   */
+  @Override
+  public String toString()
+  {
+    String output = "" + getGyroAngle() + "," + getRawGyroAngle();
+
+    for (SwerveDriveModule module : swerveModules) {
+      output += "," + module.getModuleNumber() + "," + module.getTargetAngle() + "," 
+        + module.getAngleMotor().get() + "," + module.getAngleMotor().getOutputCurrent() + "," + module.getAngleMotor().getMotorTemperature() + "," + module.getAngleMotorPosition() + ","
+        + module.getDriveMotor().get() + "," + module.getDriveMotor().getOutputCurrent() + "," + module.getDriveMotor().getMotorTemperature() + "," + module.getDriveMotorPosition();
+    }
+
+    return output;
+  }
 }

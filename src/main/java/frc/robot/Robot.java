@@ -18,7 +18,7 @@ import edu.wpi.first.wpilibj.smartdashboard.SmartDashboard;
 
 import frc.robot.subsystems.*;
 import frc.robot.util.*;
-import frc.robot.commands.drivebaseCommands.MechanumUserDrive;
+import frc.robot.commands.drivebaseCommands.HolonomicDriveCommand;
 
 import frc.robot.util.constants.OIConstants;
 import frc.robot.util.constants.Constants;
@@ -76,7 +76,7 @@ public class Robot extends TimedRobot
         camera1.setFPS(10);
 
         //AUTO CHOOSER
-        m_chooser.setDefaultOption("Default Auto", new MechanumUserDrive());
+        m_chooser.setDefaultOption("Default Auto", new HolonomicDriveCommand(swerveDriveBase));
         SmartDashboard.putData("Auto mode", m_chooser);
     }
   
@@ -95,8 +95,6 @@ public class Robot extends TimedRobot
         // SmartDashboard.putNumber("Lifter/CurrentL", pdp.getCurrent(?));
         // SmartDashboard.putNumber("Lifter/CurrentR", pdp.getCurrent(?));
         // SmartDashboard.putNumber("Lifter/CurrentB", pdp.getCurrent(?));
-
-        putOiInfo();
     }
   
     /**
@@ -199,19 +197,5 @@ public class Robot extends TimedRobot
     @Override
     public void testPeriodic() 
     {   
-    }
-
-    /**
-     * Pushes operation inferface information from joystick to network tables
-     */
-    public void putOiInfo()
-    {
-        SmartDashboard.putNumber("OI/X-axis", oi.driveJoystick.getRawAxis(OIConstants.DRIVE_JOYSTICK_X));
-        SmartDashboard.putNumber("OI/Y-axis", oi.driveJoystick.getRawAxis(OIConstants.DRIVE_JOYSTICK_Y));
-        SmartDashboard.putNumber("OI/Twist", oi.driveJoystick.getRawAxis(OIConstants.DRIVE_JOYSTICK_TWIST));
-        SmartDashboard.putNumber("OI/Magnitude", oi.driveJoystick.getMagnitude());
-        SmartDashboard.putNumber("OI/Direction", oi.driveJoystick.getDirectionDegrees());
-        SmartDashboard.putNumber("Telemetry/Heading", mechanumDriveBase.getHeading());
-        SmartDashboard.putNumber("Telemetry/TargetHeading", mechanumDriveBase.getTargetHeading());
     }
 }
