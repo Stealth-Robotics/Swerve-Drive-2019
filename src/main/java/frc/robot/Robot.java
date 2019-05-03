@@ -20,6 +20,9 @@ import frc.robot.subsystems.*;
 import frc.robot.util.*;
 import frc.robot.commands.drivebaseCommands.HolonomicDriveCommand;
 
+import net.schmizz.sshj.SSHClient;
+import net.schmizz.sshj.connection.channel.direct.Session;
+
 import frc.robot.util.constants.OIConstants;
 import frc.robot.util.constants.Constants;
 
@@ -77,6 +80,31 @@ public class Robot extends TimedRobot
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(1);
         camera1.setResolution(160, 120);
         camera1.setFPS(10);
+
+        //Startup LED code on Raspbarry Pi
+        try {
+            final SSHClient ssh = new SSHClient();
+        
+            ssh.connect("192.168.1.xxx, 22");
+            try {
+                ssh.authPassword("pi", "raspberry");
+                final Session session = ssh.startSession();
+                try {
+                    //session.exec("echo raspberry | sudo -S reboot");
+                    session.exec("sudo examples-api-use/scrolling-text-example --led-rows=32 --led-cols=64 -f fonts/8x13B.bdf -s 2 -y 8 --led-slowdown-gpio=1 STEALTH 4089");
+                    //final Command cmd = session.exec("echo raspberry | sudo -S reboot");
+                } finally {
+                    session.close();
+                }
+            } finally {
+                ssh.disconnect();
+                ssh.close();
+            }
+        } catch (Exception e) {
+            //TODO: handle exception
+            e.printStackTrace();
+        }
+
 
         //AUTO CHOOSER
         m_chooser.setDefaultOption("Default Auto", new HolonomicDriveCommand(swerveDriveBase));
