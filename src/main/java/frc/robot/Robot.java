@@ -84,14 +84,17 @@ public class Robot extends TimedRobot
         //Startup LED code on Raspbarry Pi
         try {
             final SSHClient ssh = new SSHClient();
-        
-            ssh.connect("192.168.1.xxx, 22");
+
+            //TODO: put in the correct ip for the PI 
+            ssh.connect("10.40.89.xxx", 22);
+
             try {
                 ssh.authPassword("pi", "raspberry");
+                
                 final Session session = ssh.startSession();
                 try {
-                    //session.exec("echo raspberry | sudo -S reboot");
-                    session.exec("sudo examples-api-use/scrolling-text-example --led-rows=32 --led-cols=64 -f fonts/8x13B.bdf -s 2 -y 8 --led-slowdown-gpio=1 STEALTH 4089");
+                    session.exec("sudo examples-api-use/scrolling-text-example --led-rows=32 --led-cols=64 -f fonts/8x13B.bdf " + 
+                        "-s 2 -y 8 --led-slowdown-gpio=1 STEALTH 4089");
                     //final Command cmd = session.exec("echo raspberry | sudo -S reboot");
                 } finally {
                     session.close();
@@ -100,9 +103,11 @@ public class Robot extends TimedRobot
                 ssh.disconnect();
                 ssh.close();
             }
+
         } catch (Exception e) {
-            //TODO: handle exception
             e.printStackTrace();
+
+            System.out.println("Error Couldn't Start LEDs on Raspberry PI.\nERROR : " + e.getClass().getName() + ", " + e.getMessage());
         }
 
 
@@ -186,11 +191,6 @@ public class Robot extends TimedRobot
     {
         Scheduler.getInstance().run();
     }
-
-    /*@Override
-    public boolean isDisabled() {
-        return super.isDisabled() || disabled;
-    }*/
   
     @Override
     public void teleopInit() 
