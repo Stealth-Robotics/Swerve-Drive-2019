@@ -7,6 +7,11 @@
 
 package frc.robot;
 
+import com.revrobotics.CANEncoder;
+import com.revrobotics.CANPIDController;
+import com.revrobotics.CANSparkMax;
+import com.revrobotics.CANSparkMaxLowLevel.MotorType;
+
 import edu.wpi.cscore.UsbCamera;
 import edu.wpi.first.cameraserver.CameraServer;
 import edu.wpi.first.wpilibj.PowerDistributionPanel;
@@ -20,11 +25,14 @@ import frc.robot.subsystems.*;
 import frc.robot.util.*;
 import frc.robot.commands.drivebaseCommands.HolonomicDriveCommand;
 
-import net.schmizz.sshj.SSHClient;
-import net.schmizz.sshj.connection.channel.direct.Session;
+//import net.schmizz.sshj.SSHClient;
+//import net.schmizz.sshj.connection.channel.direct.Session;
 
 import frc.robot.util.constants.OIConstants;
 import frc.robot.util.constants.Constants;
+
+
+import com.revrobotics.ControlType;
 
 /**
  * The VM is configured to automatically run this class, and to call the
@@ -56,12 +64,12 @@ public class Robot extends TimedRobot
     {
         //SUBSYSTEMS
         //mechanumDriveBase = new MechanumDriveBase();
-        swerveDriveBase = new SwerveDriveBase();
+        //swerveDriveBase = new SwerveDriveBase();
 
-        pdp = new PowerDistributionPanel();
-        oi = new OI();
+        //pdp = new PowerDistributionPanel();
+        //oi = new OI();
 
-        //start logging thread
+        /*//start logging thread
         loggingThread = new Thread(() -> {
             Logger logging = new Logger();
             while (!Thread.interrupted()) {
@@ -70,8 +78,9 @@ public class Robot extends TimedRobot
         });
 
         loggingThread.start();
+        */
         
-        //init USB CAMERA 1
+        /*//init USB CAMERA 1
         UsbCamera camera = CameraServer.getInstance().startAutomaticCapture(0);
         camera.setResolution(160, 120);
         camera.setFPS(15);
@@ -79,10 +88,10 @@ public class Robot extends TimedRobot
         //init USB CAMERA 2
         UsbCamera camera1 = CameraServer.getInstance().startAutomaticCapture(1);
         camera1.setResolution(160, 120);
-        camera1.setFPS(10);
+        camera1.setFPS(10);*/
 
         //Startup LED code on Raspbarry Pi
-        try {
+        /*try {
             final SSHClient ssh = new SSHClient();
 
             //TODO: put in the correct ip for the PI 
@@ -103,17 +112,16 @@ public class Robot extends TimedRobot
                 ssh.disconnect();
                 ssh.close();
             }
-
         } catch (Exception e) {
             e.printStackTrace();
 
             System.out.println("Error Couldn't Start LEDs on Raspberry PI.\nERROR : " + e.getClass().getName() + ", " + e.getMessage());
-        }
+        }*/
 
 
         //AUTO CHOOSER
-        m_chooser.setDefaultOption("Default Auto", new HolonomicDriveCommand(swerveDriveBase));
-        SmartDashboard.putData("Auto mode", m_chooser);
+        //m_chooser.setDefaultOption("Default Auto", new HolonomicDriveCommand(swerveDriveBase));
+        //SmartDashboard.putData("Auto mode", m_chooser);
     }
   
     /**
@@ -214,12 +222,33 @@ public class Robot extends TimedRobot
         Scheduler.getInstance().run();
     }
 
+    CANSparkMax sparkTest;
+    CANPIDController sparkPID;
+    CANEncoder sparkTestEncoder;
+
     /**
      * This function is called once each time the robot enters test mode
      */
     @Override
     public void testInit() 
     {
+        sparkTest = new CANSparkMax(13, MotorType.kBrushless);
+
+        //sparkTest.restoreFactoryDefaults();
+
+        sparkTestEncoder = sparkTest.getEncoder();
+
+        sparkTest.setMotorType(MotorType.kBrushless);
+
+        sparkPID = sparkTest.getPIDController();
+
+        //sparkPID.setReference(0, ControlType.kPosition);
+        //set PID values TODO : Tune These Values
+        sparkPID.setP(2);
+        sparkPID.setI(0);
+        sparkPID.setD(0);
+
+        //SmartDashboard.putNumber("Testing SPEED", 0.5);
     }
   
     /**
@@ -227,6 +256,12 @@ public class Robot extends TimedRobot
      */
     @Override
     public void testPeriodic() 
-    {   
+    {
+        //sparkTest.set(SmartDashboard.getNumber("Testing SPEED", 0.0));
+        sparkTest.set(100);
+
+        //sparkPID.setReference(10, ControlType.kPosition);
+
+        System.out.println(sparkTest.get() + " | " + sparkTestEncoder.getPosition());
     }
 }
